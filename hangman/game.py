@@ -1,19 +1,38 @@
 from .exceptions import *
+import random
 
 # Complete with your own, just for fun :)
-LIST_OF_WORDS = []
+LIST_OF_WORDS = ['skip','jump','hop']
 
 
 def _get_random_word(list_of_words):
-    pass
-
+    if len(list_of_words) == 0:
+        raise InvalidListOfWordsException(Exceiption)
+    else:
+        return random.choice(list_of_words)
 
 def _mask_word(word):
-    pass
+    if len(word) == 0:
+        raise InvalidWordException()
+    else:
+        return len(word) * '*'
 
 
 def _uncover_word(answer_word, masked_word, character):
-    pass
+    if len(answer_word) == 0 or len(masked_word) == 0 or len(answer_word) != len(masked_word):
+        raise InvalidWordException()
+        
+    if len(character) != 1:
+        raise InvalidGuessedLetterException()
+        
+    character = character.lower()
+    answer_word = answer_word.lower()
+    if character in answer_word:
+        place_index = answer_word.index(character)
+        masked_word = masked_word[:place_index] + character + masked_word[place_index + 1:]
+    else:
+        masked_word = masked_word
+    return masked_word
 
 
 def guess_letter(game, letter):
